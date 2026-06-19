@@ -1,5 +1,6 @@
 package com.stackit.stackit.entity;
 
+import com.stackit.stackit.enums.AnswerStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,17 +22,19 @@ public class Answer {
     private Long id;
 
     @Column(columnDefinition = "TEXT")
-    private String answer;
+    private String content;
 
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private AnswerStatus status;
 
     private LocalDateTime createdAt;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "question_id")
     private Question question;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
 }
